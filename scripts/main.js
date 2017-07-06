@@ -7,24 +7,27 @@ app.importantInfo = {
 	api_key: 'cffd7ff0579747dfb2980d4437f91d6a',
 	model: 'eeed0b6733a644cea07cf4c60f87ebb7'
 };
-//hex code(s) var
-let hex;
-//hex code(s) array
-app.hexArray = [];
-//new hex code(s) array with comma separation
-app.newHexArray;
+//colors array
+app.colors = [];
 //making a clarifai app
 app.clarifaiApp = new Clarifai.App(app.importantInfo.client_id, app.importantInfo.client_secret);
 //user image url selection
-app.userImage = 'https://avatars0.githubusercontent.com/u/13894677?v=3&u=3f70c212a0f228b9e5e67f787435ae0ce4555cad&s=400';
+app.userImage = 'https://pbs.twimg.com/media/DEA9kLSUQAA_KDL.jpg';
 function setup(){
 	createCanvas(500, 500);
 };
 function draw(){
-	background(133, 3, 233);
+	background(0, 0 ,0);
 	translate(width/2, height/2);
-	ellipse(0, 0, 300);
+	for(var i = 0; i < app.colors.length; i++){
+		//map(value,start1,stop1,start2,stop2)
+		let size = map(app.colors[i].value, 2, app.colors[0].value, 2, width);
+		fill(app.colors[i].raw_hex);
+		noStroke();
+		ellipse(0, 0, size);
+	}
 };
+console.log(app.colors);
 app.clarifaiCheck = function(){
 	app.clarifaiApp.models.predict(app.importantInfo.model, app.userImage)
 		.then(function(res){
@@ -35,15 +38,13 @@ app.clarifaiCheck = function(){
 app.getColors = function(info){
 	let colorData = info.data.outputs[0].data.colors;
 	for(var i in colorData){
-		hex = colorData[i].raw_hex;
-		app.hexArray.push(hex);
+		app.colors.push(colorData[i]);
 	};
-	app.displayColors();
+	// app.displayColors();
 };
-app.displayColors = function(){
-	newHexArray = app.hexArray.join(', ');
-	$('div#colors').append(newHexArray);
-};
+// app.displayColors = function(){
+// 	$('div#colors').append('eheyyy');
+// };
 app.getVal = function(){
 	$('input#text').change(function(e){
 		e.preventDefault();
@@ -51,7 +52,7 @@ app.getVal = function(){
 	});
 };
 app.sendVal = function(){
-	$('form').on('submit', function(e){
+	$('form#main__form').on('submit', function(e){
 		e.preventDefault();
 	});
 };
