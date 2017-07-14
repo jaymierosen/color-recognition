@@ -28,37 +28,31 @@ function draw(){
 	}
 };
 console.log(app.colors);
-app.clarifaiCheck = function(){
-	app.clarifaiApp.models.predict(app.importantInfo.model, app.userImage)
+app.clarifaiCheck = function(imageUrl){
+	app.clarifaiApp.models.predict(app.importantInfo.model, imageUrl)
 		.then(function(res){
 			app.getColors(res);
-			app.sendVal();
+			// console.log(res);
 		});
 	};
 app.getColors = function(info){
 	let colorData = info.data.outputs[0].data.colors;
 	for(var i in colorData){
 		app.colors.push(colorData[i]);
+		console.log(colorData[i].raw_hex);
 	};
-	// app.displayColors();
-};
-// app.displayColors = function(){
-// 	$('div#colors').append('eheyyy');
-// };
-app.getVal = function(){
-	$('input#text').change(function(e){
-		e.preventDefault();
-		var inputVal = $('input#text').val();
-	});
 };
 app.sendVal = function(){
 	$('form#main__form').on('submit', function(e){
 		e.preventDefault();
+		var inputVal = $('input#text').val();
+		app.clarifaiCheck(inputVal);
 	});
 };
 app.init = function(){
 	app.clarifaiCheck();
-	app.getVal();
+	// app.getVal();
+	app.sendVal();
 };
 // document ready
 $(function(){
