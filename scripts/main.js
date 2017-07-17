@@ -1,7 +1,7 @@
 //app
-let app = {};
+const app = {};
 //important info
-app.importantInfo = {
+app.appInfo = {
 	client_id: 'O-a-HYqJOWapnOf58H-SLT22JMx8FnEsDbUzquCt',
 	client_secret: 'Hfelwk7UUxr1SCWUnJePHnnVCn7jspKQzmBncom5',
 	api_key: 'cffd7ff0579747dfb2980d4437f91d6a',
@@ -9,50 +9,99 @@ app.importantInfo = {
 };
 //colors array
 app.colors = [];
-//making a clarifai app
-app.clarifaiApp = new Clarifai.App(app.importantInfo.client_id, app.importantInfo.client_secret);
-//user image url selection
-app.userImage = 'https://pbs.twimg.com/media/DEA9kLSUQAA_KDL.jpg';
-function setup(){
-	createCanvas(500, 500);
-};
-function draw(){
-	background(0, 0 ,0);
-	translate(width/2, height/2);
-	for(var i = 0; i < app.colors.length; i++){
-		//map(value,start1,stop1,start2,stop2)
-		let size = map(app.colors[i].value, 2, app.colors[0].value, 2, width);
-		fill(app.colors[i].raw_hex);
-		noStroke();
-		ellipse(0, 0, size);
+// app.newColors;
+//shapes
+app.shapes = [
+	circle = {
+		x: 0,
+		y: 0,
+		w: 0,
+		h: 0,
+		// r: r,
+		// g: g,
+		// b: b,
+		r: 0,
+		g: 0,
+		b: 0,
+		a: 0
+	},
+	rectangle = {
+		x: 0,
+		y: 0,
+		w: 0,
+		h: 0,
+		r: 0,
+		g: 0,
+		b: 0,
+		a: 0
 	}
+]
+//making a clarifai app
+app.clarifaiApp = new Clarifai.App(app.appInfo.client_id, app.appInfo.client_secret);
+//setup function
+function setup(){
+	createCanvas(600, 600);
+	background(235, 235, 235);
 };
-console.log(app.colors);
+//draw function
+function draw(){
+	app.getColors = function(info){
+		let colorData = info.data.outputs[0].data.colors;
+		for(var i in colorData){
+			app.hexToRGB(colorData[i].raw_hex);
+			app.colors.push(app.hexToRGB(colorData[i].raw_hex));
+			stroke(255, 255, 255);
+			fill(app.shapes[0].r, app.shapes[0].g, app.shapes[0].b);
+			app.shapes[0].x = app.shapes[0].x + 50;
+			app.shapes[0].y = app.shapes[0].y + 50;
+			app.shapes[0].w = app.shapes[0].w + 50;
+			app.shapes[0].h = app.shapes[0].h + 50;
+			ellipse(app.shapes[0].x, app.shapes[0].y, app.shapes[0].w, app.shapes[0].h);
+			// stroke(0, 0, 0);
+			// fill(app.shapes[1].r, app.shapes[1].g, app.shapes[1].b);
+			// app.shapes[1].x = app.shapes[1].x + 50;
+			// app.shapes[1].y = app.shapes[1].y + 50;
+			// app.shapes[1].w = app.shapes[1].w + 50;
+			// app.shapes[1].h = app.shapes[1].h + 50;
+			// rect(app.shapes[1].x, app.shapes[1].y, app.shapes[1].w, app.shapes[1].h);
+			// app.colors.forEach(function(color){
+			// 	app.newColors = [];
+			// 	app.newColors.push(color);
+			// });
+		};
+	};
+}
+//running the api call
 app.clarifaiCheck = function(imageUrl){
-	app.clarifaiApp.models.predict(app.importantInfo.model, imageUrl)
+	app.clarifaiApp.models.predict(app.appInfo.model, imageUrl)
 		.then(function(res){
 			app.getColors(res);
-			// console.log(res);
 		});
 	};
-app.getColors = function(info){
-	let colorData = info.data.outputs[0].data.colors;
-	for(var i in colorData){
-		app.colors.push(colorData[i]);
-		console.log(colorData[i].raw_hex);
-	};
-};
-app.sendVal = function(){
+//converting hex to RGB or RGBA
+//thank you --> https://stackoverflow.com/questions/21646738/convert-hex-to-rgba
+app.hexToRGB = function(hex, alpha){
+    var r = parseInt(hex.slice(1, 3), 16);
+    var g = parseInt(hex.slice(3, 5), 16);
+    var b = parseInt(hex.slice(5, 7), 16);
+	if(alpha) {
+        return r + ", " + g + ", " + b + ", " + alpha;
+    } else {
+        return r + ", " + g + ", " + b;
+    }
+}
+//getting value from url input
+app.getVal = function(){
 	$('form#main__form').on('submit', function(e){
 		e.preventDefault();
-		var inputVal = $('input#text').val();
+		let inputVal = $('input#url').val();
 		app.clarifaiCheck(inputVal);
 	});
 };
+//init function
 app.init = function(){
 	app.clarifaiCheck();
-	// app.getVal();
-	app.sendVal();
+	app.getVal();
 };
 // document ready
 $(function(){
