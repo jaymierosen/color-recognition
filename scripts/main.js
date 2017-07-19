@@ -47,11 +47,17 @@ function setup(){
 function draw(){
 	app.getColors = function(info){
 		let colorData = info.data.outputs[0].data.colors;
+
+		app.colors = colorData.map(function(color) {
+			return app.hexToRGB(color.raw_hex);
+		});
+
+
 		for(var i in colorData){
-			app.hexToRGB(colorData[i].raw_hex);
-			app.colors.push(app.hexToRGB(colorData[i].raw_hex));
+			console.log(i);
+			// app.colors.push(app.hexToRGB(colorData[i].raw_hex));
 			stroke(255, 255, 255);
-			fill(app.shapes[0].r, app.shapes[0].g, app.shapes[0].b);
+			fill(app.colors[i].r, app.colors[i].g, app.colors[i].b);
 			app.shapes[0].x = app.shapes[0].x + 50;
 			app.shapes[0].y = app.shapes[0].y + 50;
 			app.shapes[0].w = app.shapes[0].w + 50;
@@ -68,7 +74,9 @@ function draw(){
 			// 	app.newColors = [];
 			// 	app.newColors.push(color);
 			// });
+			console.log(app.colors[i]);
 		};
+
 	};
 }
 //running the api call
@@ -85,9 +93,9 @@ app.hexToRGB = function(hex, alpha){
     var g = parseInt(hex.slice(3, 5), 16);
     var b = parseInt(hex.slice(5, 7), 16);
 	if(alpha) {
-        return r + ", " + g + ", " + b + ", " + alpha;
+        return { r: r, g: g, b: b,  a: alpha };
     } else {
-        return r + ", " + g + ", " + b;
+        return { r: r, g: g, b: b };
     }
 }
 //getting value from url input
