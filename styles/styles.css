@@ -11,5 +11,7 @@ input {
 }
 canvas {
 	margin: 20px 0;
+	/* sorry for using important! */
+	position: relative !important;
 	max-width: 100%;
 }
