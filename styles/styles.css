@@ -4,6 +4,7 @@ article,aside,details,figcaption,figure,footer,header,hgroup,nav,section,summary
 
 body {
 	margin: 20px;
+	background: black;
 }
 input {
 	padding: 20px;
@@ -14,4 +15,47 @@ canvas {
 	/* sorry for using important! */
 	position: relative !important;
 	max-width: 100%;
+}
+div#sounds {
+	display: -webkit-flex;
+	display: -moz-flex;
+	display: -ms-flex;
+	display: -o-flex;
+	display: flex;
+	justify-content: center;
+	align-items: center;
+}
+div#sounds div#sound {
+	width: 50px;
+	height: 50px;
+	border-radius: 50%;
+	margin: 0 20px;
+}
+div#sounds div#sound:nth-child(1) {
+	background: red;
+}
+div#sounds div#sound:nth-child(2) {
+	background: orange;
+}
+div#sounds div#sound:nth-child(3) {
+	background: yellow;
+}
+div#sounds div#sound:nth-child(4) {
+	background: green;
+}
+div#sounds div#sound:nth-child(5) {
+	background: blue;
+}
+div#sounds div#sound:nth-child(6) {
+	background: purple;
+}
+div#sounds div#sound:nth-child(7) {
+	background: pink;
+}
+div#sounds div#sound:nth-child(8) {
+	background: grey;
+}
+.animated {
+	animation-duration: 0.2s;
+	-webkit-animation-duration: 0.2s;
 }

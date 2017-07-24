@@ -1,47 +1,48 @@
 const app = {};
-app.importantInfo = {
-	client_id: '55c06bc6b9bd4e68a348ea62efaab485',
-	client_secret: 'e8d12fcc701c447492ccbe15b2c80d75'
-}
-app.getArists = (artist) => $.ajax({
-	url: `https://api.spotify.com/v1/search?=${app.client_id}`,
-	method: 'GET',
-	dataType: 'json',
-
-});
-// app.getAristsAlbums = (id) => $.ajax({
-// 	url: `https://api.spotify.com/v1/artists/${id}/albums`,
-// 	method: 'GET',
-// 	dataType: 'json',
-// 	data: {
-// 		album_type: 'album',
-// 	}
-// });
-// app.getAlbumTracks = (id) => $.ajax({
-// 	url: `https://api.spotify.com/v1/albums/${id}/tracks`,
-// 	method: 'GET',
-// 	dataType: 'json'
-// });
-var mic;
+let mic;
+let canvas;
+let sound;
+let soundGroup;
 //setup function
 function setup(){
-	var canvas = createCanvas(640, 480);
+	//setting up the canvas
+	canvas = createCanvas(1600, 600);
 	canvas.position(0, 0);
-	noStroke();
-	colorMode(HSB);
+	//setting up the mic
 	mic = new p5.AudioIn();
 	mic.start();
+	//no stroke
+	noStroke();
+	//colormode -- HSB, HSL, or RGB
+	colorMode(RGB);
 };
 //draw function
 function draw(){
-	fill(random(255), 255, 255);
-	var d = map(mic.getLevel(), 0, 0.5, 1, 50);
-	var y = map(mic.getLevel(), 0, 0.5, height, 0);
-	ellipse(50, y, d, d);
+	fill(random(255), random(255), random(255));
+	const diameter = map(mic.getLevel(), 0, 0.9, 1, 1600);
+	ellipse(width/2, height/2, diameter, diameter);
 };
-app.init = function(){
-	app.getArists();
-	console.log('hello, world?');
+app.init = function() {
+	$('div#sound').on('click',function() {
+		// grab the sound
+		const sound = $(this).data('sound');
+		// use jQuery to grab the audio element with that class
+		const audio = $('.' + sound)[0];
+		// restart it to zero
+		audio.currentTime = 0;
+		// stop it
+		audio.pause();
+		// play it
+		audio.play();
+		// add the animation  - a separate functions
+		addAnimation($(this));
+	});
+	const addAnimation = function(element) {
+		element.addClass('animated wobble').one('webkitAnimationEnd mozAnimationEnd MSAnimationEnd oanimationend animationend',function(){
+				// this runs once the animation is finished
+				element.removeClass('animated wobble');
+		});
+	}
 }
 $(function(){
 	app.init();

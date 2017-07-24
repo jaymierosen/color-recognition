@@ -1,35 +1,54 @@
 <!DOCTYPE html>
 <html>
 	<head>
-		<title>Clarifai P5 Art</title>
+		<title>Colours &amp; Sound</title>
 		<meta charset="utf-8">
 		<meta name="viewport" content="width=device-width, initial-scale=1">
+		<!-- animate.css -->
+		<link rel="stylesheet" href="http://cdnjs.cloudflare.com/ajax/libs/animate.css/3.2.0/animate.min.css">
+		<!-- animate.css -->
 		<!-- styles-->
 		<link rel="stylesheet" href="styles/styles.css">
 		<!-- styles -->
 	</head>
 	<body>
-		<form id="main__form">
-			<input type="text" id="url" placeholder="Image URL">
-			<input type="submit" id="submit">
-			<input type="file" name="photo" id="url">
-		</form>
-		<!-- <video src=""></video> -->
-		<div id="colors"></div>
-		<p class="colors">colors: </p>
+		<div id="timer"></div>
+		<div id="sounds">
+			<div id="sound" data-sound="a"></div>
+			<div id="sound" data-sound="b"></div>
+			<div id="sound" data-sound="c"></div>
+			<div id="sound" data-sound="d"></div>
+			<div id="sound" data-sound="e"></div>
+			<div id="sound" data-sound="f"></div>
+			<div id="sound" data-sound="g"></div>
+			<div id="sound" data-sound="h"></div>
+			<audio class="a" src="assets/bensound-cute.mp3"></audio>
+			<audio class="b" src="assets/bensound-dubstep.mp3"></audio>
+			<audio class="c" src="assets/bensound-epic.mp3"></audio>
+			<audio class="d" src="assets/bensound-goinghigher.mp3"></audio>
+			<audio class="e" src="assets/bensound-house.mp3"></audio>
+			<audio class="f" src="assets/bensound-jazzcomedy.mp3"></audio>
+			<audio class="g" src="assets/bensound-slowmotion.mp3"></audio>
+			<audio class="h" src="assets/bensound-tomorrow.mp3"></audio>
+			<form action="">
+				<select name="colors" id="colors">
+					<option value="RBG">RGB</option>
+					<option value="HSL">HSL</option>
+					<option value="HSB">HSB</option>
+				</select>
+			</form>
+		</div>
 		<!-- jquery -->
 		<script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
 		<!-- jquery -->
-		<!-- clarifai api -->
-		<script type="text/javascript" src="https://sdk.clarifai.com/js/clarifai-2.0.9.js"></script>
-		<!-- clarifai api -->
 		<!-- p5.js -->
 		<script type="text/javascript" src="https://cdn.rawgit.com/phazonoverload/static/b6d00937/p5.js"></script>
 		<script type="text/javascript" src="https://cdn.rawgit.com/phazonoverload/static/b6d00937/p5.dom.js"></script>
 		<script type="text/javascript" src="scripts/p5.sound.js"></script>
 		<!-- p5.js -->
-		<!-- clmtrackr libraries -->
-		<script type="text/javascript" src="scripts/clmtrackr.js"></script>
+		<!-- buzz -->
+		<!-- <script src="https://cdnjs.cloudflare.com/ajax/libs/buzz/1.2.0/buzz.min.js"></script> -->
+		<!-- buzz -->
 		<!-- scripts -->
 		<script type="text/javascript" src="scripts/main.js"></script>
 		<!-- scripts -->
