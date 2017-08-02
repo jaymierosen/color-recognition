@@ -1,78 +1,80 @@
+//app object
 const app = {};
-let mic;
-let canvas;
-let sound;
-let soundGroup;
-app.sound = null;
-let value = 0;
-let pos = 25;
+//app object variables
+app.mic;
+app.canvas;
+app.sound;
+app.audio;
+app.value = 0;
+app.song = null;
+app.saveBtn;
 //setup function
+//does not loop -- runs once
 function setup(){
 	//setting up the canvas
-	canvas = createCanvas(1600, 600);
-	canvas.position(0, 0);
+	app.canvas = createCanvas(1600, 600);
+	app.canvas.position(0, 0);
 	//setting up the mic
-	mic = new p5.AudioIn();
-	mic.start();
+	app.mic = new p5.AudioIn();
+	app.mic.start();
 	//no stroke
 	noStroke();
 	//colormode -- HSB, HSL, or RGB
 	colorMode(RGB);
 };
 //draw function
+//loops -- runs forever
 function draw(){
 	fill(random(255), random(255), random(255));
-	const x = map(mic.getLevel(), 0, 0.9, 1, 1600);
-	const y = map(mic.getLevel(), 0, 0.9, 1, 1600);
-	ellipse(width / (Math.random() * 5) , height / (Math.random() * 5 ), x, y);
-	triangle(width / (Math.random() * 5) , height / (Math.random() * 5 ), x, y);
+	// fill(random(255), random(255), random(255), random());
+	const x = map(app.mic.getLevel(), 0, 0.1, 0.5, 200);
+	const y = map(app.mic.getLevel(), 0, 0.1, 0.5, 200);
+	ellipse(width / (Math.random() * 10) , height / (Math.random() * 10), x, y);
 	setShakeThreshold(30);
 };
 function deviceShaken() {
-	value = value + 5;
-	if (value > 255) {
-		value = 0;
+	app.value = app.value + 5;
+	if (app.value > 255) {
+		app.value = 0;
 	}
 };
-var saveBtn = $('button#saveBtn');
-saveBtn.on('click', function(){
-	saveCanvas(canvas, 'myCanvas', 'jpg')
-});
 app.makeSound = function() {
 	$('div#sound').on('click',function() {
 		//if the sound is equal to a piece of audio
-		if (app.sound !== null) {
-			app.sound.pause();
+		if (app.song !== null) {
+			app.song.pause();
 		}
 		// grab the sound
 		const sound = $(this).data('sound');
 		// use jQuery to grab the audio element with that class
-		const audio = $('.' + sound)[0];
-		app.sound = audio;
+		app.audio = $('audio.' + sound)[0];
+		app.sound = app.audio;
 		// restart it to zero
-		audio.currentTime = 0;
+		app.audio.currentTime = 0;
 		// stop it
 		// play it
-		audio.play();
+		app.audio.play();
 		// add the animation  - a separate functions
 		addAnimation($(this));
 	});
-	const addAnimation = function(element) {
-		element.addClass('animated wobble').one('webkitAnimationEnd mozAnimationEnd MSAnimationEnd oanimationend animationend',function(){
-				// this runs once the animation is finished
-				element.removeClass('animated wobble');
+	const addAnimation = function(el) {
+		//.one works only once when the element is clicked
+		el.addClass('animated tada').one('webkitAnimationEnd mozAnimationEnd MSAnimationEnd oanimationend animationend', function(){
+				//this runs once the animation is finished
+				el.removeClass('animated tada');
 		});
 	};
-	// $('select#colors').change(function () {
-	// 	clrmode = $(this).val();
-	// 	// $('select#colors option:selected').each(function() {
-	// 	// 	clrmode = $(this).text();
-	// 	// });
-	// }).change();
 };
+//save button
+app.saveBtn = $('#btn__save');
+app.saveBtn.on('click', function(){
+	saveCanvas(app.canvas, 'myCanvas', 'jpg')
+});
+//init function
 app.init = function() {
 	app.makeSound();
 }
+//document ready
 $(function(){
 	app.init();
 });

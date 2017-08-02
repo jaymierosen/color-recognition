@@ -4,8 +4,10 @@ article,aside,details,figcaption,figure,footer,header,hgroup,nav,section,summary
 
 body {
 	margin: 20px;
-background-color: #FFDEE9;
-background-image: linear-gradient(0deg, #FFDEE9 0%, #B5FFFC 100%);
+	background: black;
+	font-family: sans-serif;
+	/*background-color: #FFDEE9;
+	background-image: linear-gradient(0deg, #FFDEE9 0%, #B5FFFC 100%);*/
 }
 input {
 	padding: 20px;
@@ -17,20 +19,8 @@ canvas {
 	position: relative !important;
 	max-width: 100%;
 }
-form {
-	display: -webkit-flex;
-	display: -moz-flex;
-	display: -ms-flex;
-	display: -o-flex;
-	display: flex;
-	justify-content: center;
-	align-items: center;
-	margin: 20px 0;
-	font-family: Helvetica, Arial, sans-serif;
-}
-select {
-	width: 300px;
-	border: none;
+h1 {
+	color: white;
 }
 div#sounds {
 	display: -webkit-flex;
@@ -46,33 +36,37 @@ div#sounds div#sound {
 	height: 50px;
 	border-radius: 50%;
 	margin: 0 20px;
-	background: white;
 }
-/*div#sounds div#sound:nth-child(1) {
-	background: red;
+div#sounds div#sound:nth-child(1) {
+	background: #FC3C2D;
 }
 div#sounds div#sound:nth-child(2) {
-	background: orange;
+	background: #EF5B09;
 }
 div#sounds div#sound:nth-child(3) {
-	background: yellow;
+	background: #FFD101;
 }
 div#sounds div#sound:nth-child(4) {
-	background: green;
+	background: #1FDE91;
 }
 div#sounds div#sound:nth-child(5) {
-	background: blue;
+	background: #083EA7;
 }
 div#sounds div#sound:nth-child(6) {
-	background: purple;
+	background: #7A30CF;
 }
 div#sounds div#sound:nth-child(7) {
-	background: pink;
+	background: #F4C7EE;
 }
 div#sounds div#sound:nth-child(8) {
-	background: grey;
-}*/
+	background: #FF2A93;
+}
 .animated {
-	animation-duration: 0.2s;
-	-webkit-animation-duration: 0.2s;
+	animation-duration: 1s;
+	-webkit-animation-duration: 1s;
+}
+#btn__save {
+	border: none;
+	background: white;
+	padding: 10px;
 }
